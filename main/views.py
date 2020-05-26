@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from home.models import Greeting, Owner
-
+from about.models import About
 
 
 
@@ -13,6 +13,9 @@ def main(request):
     skill3 = home.skills.all()[2]
     skill4 = home.skills.all()[3]
 
+    # about
+    about = About.objects.first()
+
     context = {
         # home
         'home': home,
@@ -20,6 +23,10 @@ def main(request):
         'skill2': skill2,
         'skill3': skill3,
         'skill4': skill4,
+
+        # about
+        'about': about,
+
 
 
     }
