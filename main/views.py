@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from home.models import Greeting, Owner
+from home.models import Greeting
 from about.models import About
-
+from resume.models import Field
 
 
 def main(request):
@@ -16,6 +16,9 @@ def main(request):
     # about
     about = About.objects.first()
 
+    # resume
+    fields = Field.objects.all()
+
     context = {
         # home
         'home': home,
@@ -27,8 +30,8 @@ def main(request):
         # about
         'about': about,
 
-
-
+        # resume
+        'fields': fields,
     }
 
 
