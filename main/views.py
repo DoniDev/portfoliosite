@@ -2,6 +2,8 @@ from django.shortcuts import render
 from home.models import Greeting
 from about.models import About
 from resume.models import Field
+from services.models import Introduction, Service
+
 
 
 def main(request):
@@ -19,6 +21,10 @@ def main(request):
     # resume
     fields = Field.objects.all()
 
+    # services
+    introduction = Introduction.objects.first()
+    services = Service.objects.all()
+
     context = {
         # home
         'home': home,
@@ -32,6 +38,10 @@ def main(request):
 
         # resume
         'fields': fields,
+
+        # services
+        'introduction': introduction,
+        'services': services,
     }
 
 
