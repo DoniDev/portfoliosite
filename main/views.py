@@ -3,7 +3,7 @@ from home.models import Greeting
 from about.models import About
 from resume.models import Field
 from services.models import Introduction, Service
-
+from projects.models import Project, ProjectIntro
 
 
 def main(request):
@@ -25,6 +25,10 @@ def main(request):
     introduction = Introduction.objects.first()
     services = Service.objects.all()
 
+    # projects
+    printro = ProjectIntro.objects.first()
+    projects = Project.objects.all()
+
     context = {
         # home
         'home': home,
@@ -42,6 +46,10 @@ def main(request):
         # services
         'introduction': introduction,
         'services': services,
+
+        # projects
+        'printro': printro,
+        'projects': projects,
     }
 
 
