@@ -1,12 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from home.models import Greeting
 from about.models import About
 from resume.models import Field
 from services.models import Introduction, Service
 from projects.models import Project, ProjectIntro
+from contact.models import Contact
+from contact.forms import ContactForm
+from django.core.mail import send_mail
+import os
+from django.contrib import messages
+
 
 
 def main(request):
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        subject = form.cleaned_data['name']
+        from_email = form.cleaned_data['email']
+        message = form.cleaned_data['message']
+        send_mail(subject, message, from_email, [os.environ.get(str('EMAIL_USER'))])
+        messages.success(request, 'Message sent')
+        form = ContactForm()
+        return redirect('/')
+
+
+
 
     # home
     home = Greeting.objects.first()
@@ -29,6 +47,9 @@ def main(request):
     printro = ProjectIntro.objects.first()
     projects = Project.objects.all()
 
+    # contact
+    contact = Contact.objects.first()
+
     context = {
         # home
         'home': home,
@@ -50,7 +71,12 @@ def main(request):
         # projects
         'printro': printro,
         'projects': projects,
+
+        # contact
+        'contact': contact,
+        'form': form,
     }
 
 
     return render(request, 'main/main.html', context=context)
+

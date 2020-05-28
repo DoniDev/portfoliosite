@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'services.apps.ServicesConfig',
     'contact.apps.ContactConfig',
     'owner.apps.OwnerConfig',
+    'crispy_forms', 'widget_tweaks',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,7 +30,8 @@ INSTALLED_APPS = [
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pj46ovqvlbrs_4al-5i9gzu_buf%pta*orxuq=8h%o1mw4e*$g'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -124,6 +126,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
